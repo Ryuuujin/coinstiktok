@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TikTok Coins UI Clone</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <form onsubmit="handleBuy(event)">
+      <label for="username">Tiktok Username</label>
+      <div class="input-with-icon">
+        <img src="logo.png" alt="TikTok Icon">
+        <input type="text" id="username" placeholder="Username TikTok" required>
+      </div>
+
+      <h3>Pilih Paket Coins</h3>
+      <div class="coins-options">
+        <div class="coin-card">
+          <img src="coins.webp" alt="coin" class="coin-icon">
+          <div>
+            <p>70</p>
+            <span>$0,29</span>
+          </div>
+        </div>
+        <div class="coin-card">
+          <img src="coins.webp" alt="coin" class="coin-icon">
+          <div>
+            <p>350</p>
+            <span>$0,58</span>
+          </div>
+        </div>
+        <div class="coin-card">
+          <img src="coins.webp" alt="coin" class="coin-icon">
+          <div>
+            <p>700</p>
+            <span>$1,29</span>
+          </div>
+        </div>
+        <div class="coin-card">
+          <img src="coins.webp" alt="coin" class="coin-icon">
+          <div>
+            <p>1400</p>
+            <span>$1,58</span>
+          </div>
+        </div>          
+      </div>
+
+      <div class="custom-ammount-card">
+        <img src="coins.webp" alt="coin" class="coin-icon">
+        <label for="custom-coins">Large Amount</label>
+        <br>
+        <input type="text" id="custom-coins" placeholder="Input Amount" pattern="[0-9.,]+" title="Masukkan angka dengan titik atau koma" />
+      </div>
+
+      <br>
+      <button type="submit">Buy</button>
+    </form>
+
+  </div>
+
+  <script>
+    function handleBuy(event) {
+      event.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const customCoins = document.getElementById("custom-coins").value.trim();
+
+      if (username !== "") {
+        localStorage.setItem("tiktokUsername", username);
+
+        if (customCoins !== "") {
+          localStorage.setItem("customCoins", customCoins);
+        } else {
+          localStorage.removeItem("customCoins");
+        }
+
+        // Tampilkan overlay loading
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'loading-overlay';
+        loadingDiv.style = `
+          position: fixed;
+          top: 0; left: 0;
+          width: 100%; height: 100%;
+          background: rgba(255,255,255,0.9);
+          z-index: 9999;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column;
+        `;
+        loadingDiv.innerHTML = `
+          <img src="loadings.gif" 
+               alt="Loading..." style="width:110px; height:90px;" />
+        `;
+        document.body.appendChild(loadingDiv);
+
+        // Delay 2 detik lalu redirect
+        setTimeout(() => {
+          window.location.href = "success.html";
+        }, 2000);
+      } else {
+        alert("Silakan masukkan username TikTok.");
+      }
+    }
+
+    // Efek active untuk coin card
+    const coinCards = document.querySelectorAll('.coin-card');
+    coinCards.forEach(card => {
+      card.addEventListener('click', () => {
+        coinCards.forEach(c => c.classList.remove('active'));
+        card.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

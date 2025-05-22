@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Payment Success</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Tambahan styling untuk tombol Back */
+    .back-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #ff0050; /* warna merah khas TikTok */
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+    .back-button:hover {
+      background-color: #e60044;
+    }
+  </style>
+</head>
+<body>
+  <div class="success-page">
+    <div class="success-card">
+      <img src="https://cdn-icons-png.flaticon.com/512/845/845646.png" alt="Success Icon" class="success-icon">
+      <h2>Payment Success</h2>
+      <p id="thanks-text">Terima kasih, pembelian coins kamu sedang diproses.</p>
+      <p id="coin-amount"></p>
+      <button class="back-button" onclick="goBack()">Back</button>
+    </div>
+  </div>
+
+<script>
+  const username = localStorage.getItem("tiktokUsername");
+  const coins = localStorage.getItem("customCoins");
+
+  if (username) {
+    document.getElementById("thanks-text").textContent =
+      `You topup @${username} has been processing 24 hours.`;
+  }
+
+  if (coins) {
+    document.getElementById("coin-amount").textContent =
+      `Amount topup: ${coins}. While waiting, you can gift to the other using virtual gift.`;
+  }
+
+  function goBack() {
+    window.history.back();
+  }
+</script>
+
+</body>
+</html>
